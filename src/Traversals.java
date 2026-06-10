@@ -169,6 +169,41 @@ public class Traversals {
    * @return a list of lists, where each inner list represents a root-to-leaf path in pre-order
    */
   public static <T> List<List<T>> findAllRootToLeafPaths(TreeNode<T> node) {
-    return null;
+    List<List<T>> list = new ArrayList<>();//Create list that will be returned
+    if(node == null)return list;
+    Stack<TreeNode<T>> stack = new Stack<>(); // Create stack to go through Tree
+
+    TreeNode<T> current = node; // Define current
+    stack.push(current);// add current to stack;
+    
+    int i = 0; //index to move through paths
+    
+    list.add(new ArrayList<>()); // Add base path
+    System.out.println(list);
+    while(!stack.isEmpty()){ // while stack not empty
+      current = stack.pop(); // current is the most recent thing from the stack
+      
+      if(current == null){ // pass null
+        continue;
+      }
+      list.get(i).add(current.value); // add current node to path
+      
+      if(current.left != null && current.right != null){ // if path splits make a copy
+        list.add(i+1,new ArrayList<>(List.copyOf(list.get(i))));
+      }
+
+      if(current.left == null && current.right == null){ // if current is a leaf node
+        i++; // move to next path
+
+      } else {
+
+        stack.push(current.right);
+        stack.push(current.left);
+      }
+
+      
+    }
+
+    return list;
   }
 }
