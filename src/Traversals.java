@@ -29,25 +29,9 @@ public class Traversals {
    * @return the count of internal nodes, or 0 if the tree is null
    */
   public static int countInternalNodes(TreeNode<Integer> node) {
-    Stack<TreeNode<Integer>> stack = new Stack<>();
+    if(node == null || node.left == null && node.right == null) return 0;
 
-    TreeNode<Integer> current = node;
-    int count =0;
-    stack.push(node);
-
-    while(!stack.isEmpty()){
-      current = stack.pop();
-      if(current == null)continue;
-
-      if(current.left == null && current.right == null) continue;
-
-      count++;
-
-      stack.push(current.right);
-      stack.push(current.left);
-    }
-
-    return count;
+    return 1 + countInternalNodes(node.left) + countInternalNodes(node.right);
   }
 
   /**
